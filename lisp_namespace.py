@@ -86,7 +86,13 @@ def lambdef(*args):
 def cond(*args):
     pass
 
-symbols = { 
+def _return(*args):
+    if len(args) > 1:
+        print('('+' '.join(str(arg) for arg in args)+')')
+    else:
+        print(args[0])
+
+functions = { 
     '+': add,
     '-': sub,
     '*': mult,
@@ -99,5 +105,8 @@ symbols = {
     'atom?': atom,
     'def': define,
     'lambda': lambdef,
-    'cond': cond
+    'cond': cond,
+    '_return': _return
 }
+
+symbols = {}
