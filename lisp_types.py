@@ -15,10 +15,7 @@ def isInt(atom):
 
 
 def isKnownSymbol(atom):
-    return atom in ns.symbols or isKnownFunction(atom)
-
-def isKnownFunction(atom):
-    return atom in ns.functions
+    return atom in ns.symbols
 
 def castString(atom):
     return atom[2:-2]
@@ -30,8 +27,6 @@ def cast(atom):
         return int(atom)
     elif isNum(atom):
         return float(atom)
-    elif isKnownFunction(atom):
-        return ns.functions[atom]
     elif isKnownSymbol(atom):
         return ns.symbols[atom]
     else:
