@@ -1,6 +1,5 @@
 import re
 import lisp_builtins as _globals
-import lisp_environment as env
 
 def isStr(atom):
     _string = "^([\"].*[\"])|([\'].*[\'])$"

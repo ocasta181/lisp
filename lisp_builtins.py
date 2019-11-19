@@ -1,5 +1,3 @@
-import lisp_environment as env
-
 def eq(*args, **kwargs):
     _eq = True
     last = None
@@ -78,10 +76,6 @@ def define(*args, **kwargs):
 
 def lambdef(*args, **kwargs):
     pass
-    # params = args[0]
-    # func = args[1]
-    # print("params: ",params)
-    # print('func: ',func)
 
 
 def cond(*args, **kwargs):
