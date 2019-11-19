@@ -1,65 +1,32 @@
-def eq(*args, **kwargs):
-    _eq = True
-    last = None
-    for idx, item in enumerate(args):
-        if idx == 0:
-            last = item
-        else:
-            _eq = last == item
-    return _eq
+import functools as func
+import operator as op
 
+def eq(*args, **kwargs):
+    return func.reduce(op.eq, args)
 
 def add(*args, **kwargs):
-    for idx, item in enumerate(args):
-        if idx == 0:
-            _sum = item
-        else:
-            _sum += item
-    return _sum
-
+    return func.reduce(op.add,args)
 
 def sub(*args, **kwargs):
-    for idx, item in enumerate(args):
-        if idx == 0:
-            _diff = item
-        else:
-            _diff -= item
-    return _diff
-
+    return func.reduce(op.sub,args)
 
 def mult(*args, **kwargs):
-    for idx, item in enumerate(args):
-        if idx == 0:
-            _prod = item
-        else:
-            _prod *= item
-    return _prod
-
+    return func.reduce(op.mul,args)
 
 def div(*args, **kwargs):
-    for idx, item in enumerate(args):
-        if idx == 0:
-            _quot = item
-        else:
-            _quot /= item
-    return _quot
-
+    return func.reduce(op.truediv,args)
 
 def quote(*args, **kwargs):
     print(' '.join(str(arg) for arg in args))
 
-
 def cons(*args, **kwargs):
     return tuple(args)
-
 
 def car(*args, **kwargs):
     return args[0][0]
 
-
 def cdr(*args, **kwargs):
     return args[0][1:]
-
 
 def atom(*args, **kwargs):
     if len(args) > 1  or type(args[0]) == type(()):
@@ -67,20 +34,16 @@ def atom(*args, **kwargs):
     else:
         return True
 
-
 def define(*args, **kwargs):
     ENV = kwargs['ENV']
     ENV.insert(args[0],args[1])
     return ENV.get(args[0])
 
-
 def lambdef(*args, **kwargs):
     pass
 
-
 def cond(*args, **kwargs):
     return args
-
 
 def _return(*args, **kwargs):
     if len(args) > 1:
