@@ -45,8 +45,8 @@ def div(*args):
     return _quot
 
 
-def quote():
-    pass
+def quote(*args):
+    print(' '.join(str(arg) for arg in args))
 
 
 def cons(*args):
@@ -54,20 +54,14 @@ def cons(*args):
 
 
 def car(*args):
-    print("args: ",args)
-    print("args[0]: ",args[0])
     return args[0][0]
 
 
 def cdr(*args):
-    print("args: ",args)
-    print("args[0]: ",args[0])
     return args[0][1:]
 
 
 def atom(*args):
-    print('args: ',args)
-    print('type(args[0]): ',type(args[0]))
     if len(args) > 1  or type(args[0]) == type(()):
         return False
     else:
@@ -80,17 +74,26 @@ def define(*args):
 
 
 def lambdef(*args):
-    pass
+    params = args[0]
+    func = args[1]
+    print("params: ",params)
+    print('func: ',func)
 
 
 def cond(*args):
-    pass
+    print('len(args): ',len(args))
+    return args
+
 
 def _return(*args):
-    if len(args) > 1:
-        print('('+' '.join(str(arg) for arg in args)+')')
-    else:
-        print(args[0])
+    print('_return args: ',args)
+    if len(args):
+        if len(args) > 1:
+            quote(args)
+        else:
+            print('returing args[0]:',args[0])
+            quote(args[0])
+
 
 functions = { 
     '+': add,
@@ -109,4 +112,7 @@ functions = {
     '_return': _return
 }
 
-symbols = {}
+
+symbols = {
+    'else': 'else'
+}

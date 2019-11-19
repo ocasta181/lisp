@@ -13,7 +13,6 @@ def isInt(atom):
     _int = "^[0-9]*$"
     return re.match(_int, atom)
 
-
 def isKnownSymbol(atom):
     return atom in ns.symbols or isKnownFunction(atom)
 

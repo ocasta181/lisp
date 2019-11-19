@@ -22,7 +22,6 @@ class AST():
         return str(tree)
                 
 
-
 class ASNode():
 
     def __init__(self, val, parent = None):
@@ -36,4 +35,7 @@ class ASNode():
         return node
 
     def __str__(self):
+        return str(self.val)
+
+    def __repr__(self):
         return str(self.val)
