@@ -12,7 +12,8 @@ def tolkenize(file):
     return [t for t in re.findall(tolken, file) if t[0] != ';']
     
 
-def graph(tolkens, AST):
+def graph(tolkens):
+    AST = ast.AST()
     depth = 0
     tree_buffer = [[]]
     depth_start = [0]
@@ -54,35 +55,20 @@ def graph(tolkens, AST):
             else:
                 print('handle atom')
                 tree_buffer[depth].append(node)
+    return AST
 
 
-def execute(node):
+def Eval(node):
     resolved_children = []
     if node.val == ns.functions['cond']:
-            last = False
-            for idx,child in enumerate(node.children):
-                print('handle child:',child)
-                print('idx: ',idx)
-                if idx % 2 != 0:
-                    print('continue')
-                    continue
-                elif last == False and child == ns.symbols['else']:
-                    resolved_children.append(execute(children[idx+1]))
-                else:
-                    res = execute(child)
-                    if res:
-                        last = True
-                        resolved_children.append(execute(node.children[idx+1]))
-                    else:
-                        last = False
-                
-            print("hit conditional")
-            print("children: ",node.children)
-            print('resolved_children: ',resolved_children)
+        handle_cond(node, resolved_children)
+    elif node.val == ns.functions['lambda']:
+        handle_lambda(node, resolved_children)
     else:
         while node.children:
             child = node.children.pop(0)
-            resolved_children.append(execute(child))
+            resolved_children.append(Eval(child))
+
     if callable(node.val):
         return node.val(*resolved_children)
     else:
@@ -90,11 +76,40 @@ def execute(node):
         return node.val
     
 
+
+def handle_lambda(node, resolved_children):
+    if len(node.children) != 2:
+        raise ValueError
+    # else:
+    #     params = node.children[0]
+    #     body = node.children[1]
+    #     lambda 
+    #     node.val
+    #     print("params: ",params)
+    #     print("body: ",body)
+
+
+def handle_cond(node, resolved_children):
+    last = False
+    for idx,child in enumerate(node.children):
+        if idx % 2 != 0:
+            continue
+        elif last == False and child == ns.symbols['else']:
+            resolved_children.append(Eval(children[idx+1]))
+        else:
+            res = Eval(child)
+            if res:
+                last = True
+                resolved_children.append(Eval(node.children[idx+1]))
+            else:
+                last = False
+    
+
 def repl():
     while True:
         try: 
             command = input(">>>")
-            read(command)
+            Eval(read(command).root)
         except EOFError: break
 
 
@@ -104,12 +119,8 @@ def read_file(filename):
 
 
 def read(data):
-    AST = ast.AST()
     tolkens = tolkenize(data)
-    print('tolkens: ',tolkens)
-    graph(tolkens, AST)
-    print('graph: ',AST)
-    execute(AST.root)
+    return graph(tolkens)
 
 
 def main(*args, **kwargs):
