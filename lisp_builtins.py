@@ -96,12 +96,3 @@ def _return(*args, **kwargs):
         quote(*args)
     else:
         print(*args)
-            
-
-
-
-
-
-symbols = {
-    'else': 'else'
-}
