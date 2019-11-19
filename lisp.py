@@ -26,6 +26,7 @@ _globals = {
     'else': 'else'
 }
 
+
 def tolkenize(file):
     tolken = """[\s,]*(~@|[\[\]{}()'`~^@]|"(?:[\\].|[^\\"])*"?|;.*|[^\s\[\]{}()'"`@,;]+)"""
     return [t for t in re.findall(tolken, file) if t[0] != ';']
