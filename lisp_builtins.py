@@ -93,9 +93,9 @@ def _return(*args, **kwargs):
         args = list(args)
         args.insert(0, '(')
         args.append(')')
-        quote(*args, **kwargs)
+        quote(*args)
     else:
-        print(*args, **kwargs)
+        print(*args)
             
 
 

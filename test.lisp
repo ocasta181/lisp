@@ -15,4 +15,6 @@
 ( ( 2 3 + ) quote )
 ( ( a quote ) quote )
 (((1 2 eq?) blah )((1 1 eq?) foo ) cond)
-((x) (x x *) lambda) 
+((x) (x x *) lambda)
+( test ( 3 4 + ) def )
+test

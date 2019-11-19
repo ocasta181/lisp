@@ -61,7 +61,6 @@ def graph(tolkens):
 def eval_ast(ast, ENV):
     resolved_children = []
     if isinstance(ast, list):
-        print('ast: ',ast)
         _globals['_return'](*ast)
     elif isinstance(ast, dict):
         for parent, children in ast.items():
@@ -72,8 +71,6 @@ def eval_ast(ast, ENV):
                 handle_lambda(children, resolved_children, ENV)
             elif parent == _globals['quote']:
                 return parent(*children)
-            # elif parent == _globals['def']:
-            #     return parent(*children, ENV=ENV)
             else:
                 while children:
                     child = children.pop(0)
@@ -98,13 +95,6 @@ def Eval(AST, ENV):
 def handle_lambda(children, resolved_children, ENV):
     if len(children) != 2:
         raise Exception('lambdas require two parameters, first: a parameter list, second: a function body')
-    # else:
-    #     params = node.children[0]
-    #     body = node.children[1]
-    #     lambda 
-    #     node.val
-    #     print("params: ",params)
-    #     print("body: ",body)
 
 
 def handle_cond(children, resolved_children, ENV):
