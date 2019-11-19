@@ -74,25 +74,26 @@ def define(*args):
 
 
 def lambdef(*args):
-    params = args[0]
-    func = args[1]
-    print("params: ",params)
-    print('func: ',func)
+    pass
+    # params = args[0]
+    # func = args[1]
+    # print("params: ",params)
+    # print('func: ',func)
 
 
 def cond(*args):
-    print('len(args): ',len(args))
     return args
 
 
 def _return(*args):
-    print('_return args: ',args)
-    if len(args):
-        if len(args) > 1:
-            quote(args)
-        else:
-            print('returing args[0]:',args[0])
-            quote(args[0])
+    if len(args) > 1:
+        args = list(args)
+        args.insert(0, '(')
+        args.append(')')
+        quote(*args)
+    else:
+        print(*args)
+            
 
 
 functions = { 
