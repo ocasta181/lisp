@@ -1,5 +1,6 @@
 import re
-import lisp_namespace as ns
+import lisp_builtins as _globals
+import lisp_environment as env
 
 def isStr(atom):
     _string = "^([\"].*[\"])|([\'].*[\'])$"
@@ -13,25 +14,22 @@ def isInt(atom):
     _int = "^[0-9]*$"
     return re.match(_int, atom)
 
-def isKnownSymbol(atom):
-    return atom in ns.symbols or isKnownFunction(atom)
-
-def isKnownFunction(atom):
-    return atom in ns.functions
+def isKnownSymbol(atom, ENV):
+    return ENV.find(atom)
 
 def castString(atom):
     return atom[2:-2]
 
-def cast(atom):
+def cast(atom, ENV):
     if isStr(atom):
         return castString(atom)
     elif isInt(atom):
         return int(atom)
     elif isNum(atom):
         return float(atom)
-    elif isKnownFunction(atom):
-        return ns.functions[atom]
-    elif isKnownSymbol(atom):
-        return ns.symbols[atom]
     else:
-        return atom
+        scope = isKnownSymbol(atom, ENV)
+        if scope:
+            return scope.get(atom)
+        else:
+            return atom
